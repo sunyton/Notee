@@ -34,6 +34,17 @@ public class DbManager {
         db.insert(Constants.TABLE_NAME, null, values);
         db.close();
     }
+    public void add_book(String name, int img) {
+
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(Constants.BOOK_NAME, name);
+        values.put(Constants.BOOK_IMG, img);
+        db.insert("book", null, values);
+        db.close();
+    }
+
+
 
     public List<NoteInfo> query(String bookName) {
         List<NoteInfo> list = new ArrayList<>();
@@ -55,6 +66,7 @@ public class DbManager {
 
         return list;
     }
+
 
 
 }

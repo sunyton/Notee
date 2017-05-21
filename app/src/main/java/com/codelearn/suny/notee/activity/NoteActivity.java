@@ -30,6 +30,7 @@ public class NoteActivity extends AppCompatActivity {
     private RecyclerView rv;
     private MyAdapter mMyAdapter;
     private FloatingActionButton fab;
+    private String bookName;
 //    private List<NoteInfo> mNoteInfos = new ArrayList<>();
 
 
@@ -46,34 +47,20 @@ public class NoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(NoteActivity.this, AddActivity.class);
+                intent.putExtra("name", bookName);
                 startActivity(intent);
                 finish();
             }
         });
-        String bookName = getIntent().getStringExtra("name");
+        bookName = getIntent().getStringExtra("name");
         Task myTask = new Task(this);
         String[] bookNamelist = {bookName};
         myTask.execute(bookNamelist[0]);
 
-//        rv.setLayoutManager(new GridLayoutManager(this, 2));
-////        initList();
-//        mMyAdapter = new MyAdapter(mNoteInfos);
-//        rv.setAdapter(mMyAdapter);
-//        rv.setHasFixedSize(true);
-//        rv.addItemDecoration(new MyDecoration());
+
 
     }
 
-//    public void initList() {
-//        NoteInfo n1 = new NoteInfo();
-//        n1.setNoteBody("这是标题");
-//        n1.setNoteTitle("这才是标题");
-//        n1.setNoteDate("iiiiiiiii");
-//        mNoteInfos.add(n1);
-//        mNoteInfos.add(n1);
-//        mNoteInfos.add(n1);
-//
-//    }
 
     public class Task extends AsyncTask<String, Void, List<NoteInfo>> {
 
@@ -92,15 +79,20 @@ public class NoteActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(List<NoteInfo> noteInfos) {
-            if (noteInfos.get(0).getNoteTitle() == null) {
+            if (noteInfos == null) {
+                NoteInfo noteInfo = new NoteInfo();
+                noteInfo.setNoteBody("哈哈哈哈");
+                noteInfo.setNoteTitle("我的日记");
+                noteInfo.setNoteDate("00:00");
+                noteInfos.add(noteInfo);
 
-            } else {
-                rv.setLayoutManager(new GridLayoutManager(mContext, 2));
-//        initList();
-                mMyAdapter = new MyAdapter(noteInfos);
-                rv.setAdapter(mMyAdapter);
-                rv.setHasFixedSize(true);
             }
+            rv.setLayoutManager(new GridLayoutManager(mContext, 2));
+//        initList();
+            mMyAdapter = new MyAdapter(noteInfos);
+            rv.setAdapter(mMyAdapter);
+            rv.setHasFixedSize(true);
+
         }
     }
 }

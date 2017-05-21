@@ -25,7 +25,8 @@ public class AddActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private EditText et_title, et_body;
     private TextView tv_time;
-    DbManager manager;
+    private DbManager manager;
+    private String book;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class AddActivity extends AppCompatActivity {
         et_body = (EditText) findViewById(R.id.add_body);
         tv_time = (TextView) findViewById(R.id.ad_time);
 
+
         c.get(Calendar.HOUR_OF_DAY);
 
         tv_time.setText(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
@@ -53,13 +55,22 @@ public class AddActivity extends AppCompatActivity {
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                manager.add("我的笔记本", et_title.getText().toString(), et_body.getText().toString(), date);
-                Intent intent = new Intent(AddActivity.this, NoteActivity.class);
-                intent.putExtra("name", "我的笔记本");
-                startActivity(intent);
-                finish();
+                book = getIntent().getStringExtra("name");
+                if (!et_title.getText().toString().equals("") && !et_body.getText().toString().equals("")) {
+                    manager.add(book, et_title.getText().toString(), et_body.getText().toString(), date);
+                }
+                Intent intent2 = new Intent(AddActivity.this, NoteActivity.class);
+                intent2.putExtra("name", book);
+                startActivity(intent2);
+
 
             }
         });
+
+
     }
+
+
+
+
 }

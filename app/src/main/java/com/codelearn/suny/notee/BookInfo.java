@@ -6,7 +6,7 @@ package com.codelearn.suny.notee;
 
 public class BookInfo {
     private String bookName;
-    private String bookImg;
+    private int bookImg;
 
     public String getBookName() {
         return bookName;
@@ -16,11 +16,11 @@ public class BookInfo {
         this.bookName = bookName;
     }
 
-    public String getBookImg() {
+    public int getBookImg() {
         return bookImg;
     }
 
-    public void setBookImg(String bookImg) {
+    public void setBookImg(int bookImg) {
         this.bookImg = bookImg;
     }
 }

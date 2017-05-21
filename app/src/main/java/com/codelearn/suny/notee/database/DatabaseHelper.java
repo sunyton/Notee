@@ -25,10 +25,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + Constants.TITLE + " varchar,"
                 + Constants.BODY + " varchar,"
                 + Constants.DATE + " integer)";
-        int i = R.drawable.notebook2;
-        String sql2 = "insert into note(bookimg,bookname) values('" + i + "','我的笔记本')";
+        String sql2 = "create table book(bookimg integer,bookname varchar)";
         db.execSQL(sql);
-//        db.execSQL(sql2);
+        db.execSQL(sql2);
 
     }
 

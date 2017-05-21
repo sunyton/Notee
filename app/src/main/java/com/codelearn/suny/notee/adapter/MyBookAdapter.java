@@ -1,5 +1,7 @@
 package com.codelearn.suny.notee.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codelearn.suny.notee.BookInfo;
+import com.codelearn.suny.notee.MainActivity;
 import com.codelearn.suny.notee.R;
+import com.codelearn.suny.notee.activity.NoteActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +25,12 @@ import java.util.List;
 
 public class MyBookAdapter extends RecyclerView.Adapter<MyBookAdapter.Holder> {
 
-    private List<String> mList = new ArrayList<>();
+    private List<BookInfo> mList;
+    private Context mContext;
 
-    public MyBookAdapter() {
-        mList.add("haha");
-        mList.add("哈哈");
-        mList.add("呵呵");
+    public MyBookAdapter(List<BookInfo> list, Context context) {
+        mContext = context;
+        mList = list;
     }
 
     @Override
@@ -37,12 +42,18 @@ public class MyBookAdapter extends RecyclerView.Adapter<MyBookAdapter.Holder> {
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
-        holder.et_book.setText(mList.get(position));
-        holder.et_book.setCursorVisible(false);
-        holder.et_book.setSelectAllOnFocus(true);
-       holder.et_book.clearFocus();
+    public void onBindViewHolder(final Holder holder, int position) {
+        holder.et_book.setText(mList.get(position).getBookName());
+        holder.im_book.setBackground(mContext.getDrawable(mList.get(position).getBookImg()));
 //        holder.im_book.setBackground(Drawable.createFromPath(""));
+        holder.im_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, NoteActivity.class);
+                intent.putExtra("name", holder.et_book.getText());
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
